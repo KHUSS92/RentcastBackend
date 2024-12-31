@@ -2,6 +2,7 @@ Rentcast Property Management System
 Overview
 
 The Rentcast Property Management System is a full-stack application that integrates with the Rentcast API to fetch property data and utilizes Neo4j as a graph database for advanced relationship-based data management. It includes a React frontend (optional) for visualization and interaction.
+
 Features
 
     API Integration:
