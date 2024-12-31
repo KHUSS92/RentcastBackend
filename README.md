@@ -43,10 +43,7 @@ Technologies Used
 
 Setup Instructions
 
-    Clone the Repository:
-
-git clone https://github.com/your-repo.git
-cd RentcastBackend
+Clone the Repository:
 
 Set Up Neo4j:
 
