@@ -1,5 +1,4 @@
 ﻿using RentcastBackend.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace RentcastBackend.Services
 {
