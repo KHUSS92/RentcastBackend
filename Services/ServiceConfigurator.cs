@@ -1,4 +1,7 @@
 ﻿using RentcastBackend.Interfaces;
+using Neo4jClient;
+using Microsoft.Extensions.Options;
+using RentcastBackend.Configurations;
 
 namespace RentcastBackend.Services
 {
@@ -16,6 +19,22 @@ namespace RentcastBackend.Services
 
             // Register your services here
             services.AddSingleton<IConfiguration>(configuration);
+
+            //Register IGraphClient
+            services.AddSingleton<IGraphClient>(provider =>
+            {
+                var neo4jSettings = provider.GetRequiredService<IOptions<Neo4jSettings>>().Value;
+
+                var client = new BoltGraphClient(
+                    new Uri(neo4jSettings.Uri),
+                    neo4jSettings.Username,
+                    neo4jSettings.Password
+                );
+
+                client.ConnectAsync().Wait();
+                return client;
+            });
+
             services.AddSingleton<Neo4jService>();
 
             // Register RentcastService with transient lifetime
