@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RentcastBackend.Interfaces;
+using RentcastBackend.Models.Property;
 
 namespace RentcastBackend.Controllers
 {
@@ -13,9 +14,9 @@ namespace RentcastBackend.Controllers
         {
             _rentcastService = rentcastService;
         }
-
+        
         [HttpGet("propertyID/{id}")]
-        public async Task<ActionResult<String>> GetPropertyByID(string id)
+        public async Task<ActionResult<PropertyDetails>> GetPropertyByID(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -31,12 +32,21 @@ namespace RentcastBackend.Controllers
                 Console.WriteLine($"Decoded Property ID: {decodedId}");
 
                 // Call the RentcastService to fetch property data
-                var propertyData = await _rentcastService.GetProperty(id);
-                return Ok(propertyData);
+                var propertyDetails = await _rentcastService.GetProperty(id);
+
+                return Ok(propertyDetails);
             }
             catch (HttpRequestException ex)
             {
-                return StatusCode(500, ex.Message);
+                // Log the exception details
+                Console.WriteLine($"Error fetching property data for ID: {decodedId}. Exception: {ex.Message}");
+                return StatusCode(500, $"Error fetching property data: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Handle unexpected exceptions
+                Console.WriteLine($"Unexpected error: {ex.Message}");
+                return StatusCode(500, "An unexpected error occurred.");
             }
         }
 

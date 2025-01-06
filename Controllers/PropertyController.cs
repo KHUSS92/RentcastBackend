@@ -15,9 +15,12 @@ namespace RentcastBackend.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Produces("application/json")]
         public async Task<IActionResult> GetPropertyById(string id)
         {
-            var propertyDetails = await _propertyService.GetPropertyByIdAsync(id);
+            var propertyDetails = await _propertyService.GetProperty(id);
 
             if (propertyDetails == null)
             {
